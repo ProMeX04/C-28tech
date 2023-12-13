@@ -12,7 +12,7 @@ void dfs(int bi, int bj){
     if(bi == ei and bj == ej) {ok = true; return;} 
     visited[bi][bj] = true;
     for(int i = 0 ;i < 8 ;i++){
-        if(bi + dx[i] < n and bi + dx[i] >= 0 and bj + dy[i] < n and bj + dy[i] >= 0){
+        if(bi + dx[i] <= n and bi + dx[i] >= 1 and bj + dy[i] <= n and bj + dy[i] >= 1){
             if(!visited[bi +dx[i]][bj + dy[i]] and A[bi +dx[i]][bj + dy[i]]){
                 dfs(bi +dx[i],bj + dy[i]);
             }
