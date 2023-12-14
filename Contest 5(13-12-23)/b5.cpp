@@ -1,67 +1,65 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <string>
+
 using namespace std;
 
-class sodier {
-public:
-    int blood , power;
+class Soldier {
+private:
+    int power;
+    int blood;
     string status;
-};
 
-void print(sodier sd) {
-    cout << "POWER : " << sd.power << endl;
-    cout << "BLOOD : " << sd.blood << endl;
-    cout << sd. status << endl;
-    cout <<  "--------------------\n";
+public:
+    Soldier(int power, int blood, string status) : power(power), blood(blood), status(move(status)) {}
 
-}
-int main() {
-    sodier sd;
-    string temp ;
-    int x;
-    cin >> temp >> temp >> sd.power;
-    cin >> temp >> temp >> sd.blood;
-    cin >> sd.status;
-    int n; cin >> n;
-    for (int i = 0 ; i < n ; i ++) {
-        string s;
-        cin >> s;
-
-        if (sd.status == "ALIVE") {
-            if (s == "mushroom") {
-                sd.blood -= 15;
-                sd.power -= 2;
-
-            }
-            else if (s == "pea") {
-                sd.blood += 10;
-                sd.power += 2;
-            }
-            else if ( s == "soldier" ) {
-                int t; cin >> t;
-
-                if (t  >= sd. power) {
-                    sd.status = "DEAD";
-                    sd.blood = 0;
-                    sd.power = 0;
-                }
-                else {
-                    sd.blood += 5;
-                    sd.power += 7;
-                }
-            }
-            else if (s == "witch") {
-                int t; cin >> t;
-                if (t >= sd. power) {
-                    sd.status = "DEAD";
-                    sd.blood = 0;
-                    sd.power = 0;
-                }
-                else {
-                    sd.power += 5;
+    void fight(const string& event) {
+        if (status == "ALIVE") {
+            if (event == "mushroom") {
+                blood -= 15;
+                power -= 2;
+            } else if (event == "pea") {
+                blood += 10;
+                power += 2;
+            } else if (event == "soldier" || event == "witch") {
+                int enemyPower; cin >> enemyPower;
+                if (enemyPower >= power) {
+                    status = "DEAD";
+                    blood = 0;
+                    power = 0;
+                } else {
+                    if (event == "soldier") {
+                        blood += 5;
+                        power += 7;
+                    } else {
+                        power += 5;
+                    }
                 }
             }
         }
-
-        print(sd);
     }
+
+    void print() const {
+        cout << "POWER : " << power << "\n";
+        cout << "BLOOD : " << blood << "\n";
+        cout << status << "\n";
+        cout << "--------------------\n";
+    }
+};
+
+int main() {
+    int power, blood;
+    string status;
+    cin.ignore(8); cin >> power;
+    cin.ignore(8); cin >> blood;
+    cin >> status;
+    Soldier soldier(power, blood, status);
+
+    int eventCount; cin >> eventCount;
+    for(int i = 0; i < eventCount; ++i) {
+        string event; cin >> event;
+        soldier.fight(event);
+        soldier.print();
+    }
+
+    return 0;
 }
